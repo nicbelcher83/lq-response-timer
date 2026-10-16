@@ -1,0 +1,84 @@
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --muted: #5f6368;
+  --border: #e2e2de;
+  --accent: #1f4e79;
+  --ok: #1b7a3d;
+  --ok-bg: #e6f4ea;
+  --bad: #b3261e;
+  --bad-bg: #fce8e6;
+  --pending-bg: #eef1f5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121314;
+    --surface: #1c1d1f;
+    --text: #ececec;
+    --muted: #a0a4a8;
+    --border: #2e3033;
+    --accent: #8ab4f8;
+    --ok: #81c995;
+    --ok-bg: #1e3326;
+    --bad: #f28b82;
+    --bad-bg: #3c1f1d;
+    --pending-bg: #24272b;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121314; --surface: #1c1d1f; --text: #ececec; --muted: #a0a4a8; --border: #2e3033;
+  --accent: #8ab4f8; --ok: #81c995; --ok-bg: #1e3326; --bad: #f28b82; --bad-bg: #3c1f1d; --pending-bg: #24272b;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+.eyebrow { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.intro { margin: 6px 0 20px; color: var(--muted); }
+h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 28px 0 10px; }
+
+.counter, .meanwhile, .milestones li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.counter { padding: 20px 16px; text-align: center; }
+.counter-label { margin: 0 0 8px; color: var(--muted); font-weight: 500; }
+.counter-digits { display: flex; justify-content: center; gap: 12px; }
+.counter-digits div { min-width: 84px; }
+.counter-digits span { display: block; font-size: 48px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.counter-digits small { color: var(--muted); font-size: 13px; }
+.counter-sub { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+.counter.done { border-color: var(--accent); }
+
+.meanwhile { margin-top: 12px; padding: 14px 16px; }
+.meanwhile-label { margin: 0; font-size: 13px; color: var(--muted); }
+.meanwhile-text { margin: 4px 0 0; font-size: 17px; font-weight: 500; }
+.meanwhile-next { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+
+.milestones { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.milestones li { padding: 14px 16px; }
+.ms-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.ms-title { font-weight: 600; }
+.ms-state { font-size: 13px; white-space: nowrap; color: var(--muted); }
+.ms-state.reached { color: var(--ok); font-weight: 600; }
+.ms-detail { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.promise { margin-top: 8px; padding: 6px 10px; border-radius: 8px; font-size: 13px; background: var(--pending-bg); }
+.promise.met { background: var(--ok-bg); color: var(--ok); }
+.promise.missed { background: var(--bad-bg); color: var(--bad); font-weight: 600; }
+.milestones li.missed { border-color: var(--bad); }
+
+footer { margin-top: 28px; font-size: 13px; color: var(--muted); }
+footer p { margin: 0 0 8px; }
+
+@media (max-width: 380px) {
+  .counter-digits { gap: 6px; }
+  .counter-digits div { min-width: 0; flex: 1; }
+  .counter-digits span { font-size: 38px; }
+}

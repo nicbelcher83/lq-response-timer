@@ -1,0 +1,11 @@
+{
+  "complaint_sent_at": "2026-10-16T11:09:43Z",
+  "extended": false,
+  "extended_at": null,
+  "milestones": {
+    "auto_ack": null,
+    "human_ack": null,
+    "response": null
+  },
+  "updated_at": "2026-10-16T11:10:43Z"
+}

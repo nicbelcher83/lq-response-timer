@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L&amp;Q Response Timer</title>
+<meta name="description" content="How long L&amp;Q is taking to respond to a formal complaint from a shared ownership resident.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">L&amp;Q complaint response timer</p>
+    <p class="intro">A shared ownership resident's formal complaint to L&amp;Q. This page tracks how long it takes to get a response. All times are UK time.</p>
+  </header>
+
+  <section class="counter" aria-live="polite">
+    <p class="counter-label" id="counter-label">Time since the complaint was sent</p>
+    <div class="counter-digits">
+      <div><span id="d">–</span><small>days</small></div>
+      <div><span id="h">–</span><small>hours</small></div>
+      <div><span id="m">–</span><small>minutes</small></div>
+    </div>
+    <p class="counter-sub" id="counter-sub"></p>
+  </section>
+
+  <section class="meanwhile" id="meanwhile" hidden>
+    <p class="meanwhile-label" id="meanwhile-label"></p>
+    <p class="meanwhile-text" id="meanwhile-text"></p>
+    <p class="meanwhile-next" id="meanwhile-next"></p>
+  </section>
+
+  <section>
+    <h2>Milestones</h2>
+    <ol class="milestones" id="milestones"></ol>
+  </section>
+
+  <footer>
+    <p id="extension-note" hidden></p>
+    <p>L&amp;Q's published promises: acknowledge a complaint by the end of the next working day, and respond within 10 working days (20 if formally extended). Working days exclude weekends and England &amp; Wales bank holidays. A complaint sent on a non-working day counts as received on the next working day.</p>
+    <p id="updated"></p>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
