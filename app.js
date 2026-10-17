@@ -103,7 +103,7 @@
   }
   function fmtDuration(ms) {
     var s = split(ms), out = [];
-    if (s.d) out.push(s.d + (s.d === 1 ? ' weekday' : ' weekdays'));
+    if (s.d) out.push(s.d + (s.d === 1 ? ' day' : ' days'));
     if (s.h) out.push(s.h + (s.h === 1 ? ' hour' : ' hours'));
     if (s.m || !out.length) out.push(s.m + (s.m === 1 ? ' minute' : ' minutes'));
     return out.join(' ');
@@ -131,8 +131,12 @@
       return 0;
     }
     var end = full || now();
-    var elapsed = weekdaySpan(sent, end);
+    var elapsed = end - sent;
     var s = split(elapsed);
+    var w = split(weekdaySpan(sent, end));
+    $('wd').textContent = w.d; $('wh').textContent = w.h; $('wm').textContent = w.m;
+    $('weekday-note').textContent = (!full && isWeekend(ukKey(now()))) ? 'Paused for the weekend' : '';
+    $('weekdays').hidden = false;
     $('d').textContent = s.d; $('h').textContent = s.h; $('m').textContent = s.m;
     if (full) {
       c.classList.add('done');
@@ -141,7 +145,7 @@
     } else {
       c.classList.remove('done');
       $('counter-label').textContent = 'Time since the complaint was sent';
-      $('counter-sub').textContent = (isWeekend(ukKey(now())) ? 'Paused for the weekend · ' : '') + 'Sent ' + fmtDateTime(sent);
+      $('counter-sub').textContent = 'Sent ' + fmtDateTime(sent);
     }
     return elapsed;
   }
@@ -194,7 +198,7 @@
 
       if (at && sent) {
         var det = document.createElement('p'); det.className = 'ms-detail';
-        det.textContent = fmtDateTime(at) + ' · took ' + fmtDuration(weekdaySpan(sent, at));
+        det.textContent = fmtDateTime(at) + ' · took ' + fmtDuration(at - sent);
         li.appendChild(det);
       }
 
@@ -207,8 +211,8 @@
           var due = dl[ms.promise];
           label += ' (' + fmtDate(due) + ')';
           if (at && at <= due) { p.classList.add('met'); label += ' · met'; }
-          else if (at && at > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed by ' + fmtDuration(weekdaySpan(due, at)); }
-          else if (now() > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed, overdue by ' + fmtDuration(weekdaySpan(due, now())); }
+          else if (at && at > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed by ' + fmtDuration(at - due); }
+          else if (now() > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed, overdue by ' + fmtDuration(now() - due); }
         }
         p.textContent = label;
         li.appendChild(p);

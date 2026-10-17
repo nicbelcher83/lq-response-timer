@@ -56,6 +56,13 @@ h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: v
 .counter-digits small { color: var(--muted); font-size: 13px; }
 .counter-sub { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
 .counter.done { border-color: var(--accent); }
+.weekdays { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.weekdays-label { margin: 0 0 4px; color: var(--muted); font-size: 13px; font-weight: 500; }
+.weekdays-digits { display: flex; justify-content: center; gap: 20px; }
+.weekdays-digits span { display: block; font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.weekdays-digits small { color: var(--muted); font-size: 12px; }
+.weekdays-note { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+.weekdays-note:empty { display: none; }
 
 .meanwhile { margin-top: 12px; padding: 14px 16px; }
 .meanwhile-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }

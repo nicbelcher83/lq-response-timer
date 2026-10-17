@@ -5,23 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>L&amp;Q Response Timer</title>
 <meta name="description" content="How long L&amp;Q is taking to respond to a formal complaint from a shared ownership resident.">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <main>
   <header>
     <p class="eyebrow">L&amp;Q complaint response timer</p>
-    <p class="intro">A shared ownership resident's formal complaint to L&amp;Q. This page tracks how long it takes to get a response. All times are UK time. The timer counts Monday to Friday only; weekends are not counted.</p>
+    <p class="intro">A shared ownership resident's formal complaint to L&amp;Q. This page tracks how long it takes to get a response. All times are UK time.</p>
   </header>
 
   <section class="counter" aria-live="polite">
     <p class="counter-label" id="counter-label">Time since the complaint was sent</p>
     <div class="counter-digits">
-      <div><span id="d">–</span><small>weekdays</small></div>
+      <div><span id="d">–</span><small>days</small></div>
       <div><span id="h">–</span><small>hours</small></div>
       <div><span id="m">–</span><small>minutes</small></div>
     </div>
     <p class="counter-sub" id="counter-sub"></p>
+    <div class="weekdays" id="weekdays" hidden>
+      <p class="weekdays-label">Counting weekdays only (Mon–Fri)</p>
+      <div class="weekdays-digits">
+        <div><span id="wd">–</span><small>weekdays</small></div>
+        <div><span id="wh">–</span><small>hours</small></div>
+        <div><span id="wm">–</span><small>minutes</small></div>
+      </div>
+      <p class="weekdays-note" id="weekday-note"></p>
+    </div>
   </section>
 
   <section class="meanwhile" id="meanwhile" hidden>
@@ -43,6 +52,6 @@
     <p id="updated"></p>
   </footer>
 </main>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
