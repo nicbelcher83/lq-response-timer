@@ -73,6 +73,22 @@
     return guess - (asUtc - guess);
   }
 
+  function isWeekend(key) { var dow = new Date(keyToUtc(key)).getUTCDay(); return dow === 0 || dow === 6; }
+  // Time between two instants counting Monday to Friday only (UK days); weekends are skipped entirely.
+  function weekdaySpan(a, b) {
+    if (b <= a) return 0;
+    var total = 0, key = ukKey(a), last = ukKey(b);
+    for (;;) {
+      if (!isWeekend(key)) {
+        var dayStart = endOfUkDay(addDays(key, -1)) + 1, dayEnd = endOfUkDay(key) + 1;
+        total += Math.max(0, Math.min(b, dayEnd) - Math.max(a, dayStart));
+      }
+      if (key === last) break;
+      key = addDays(key, 1);
+    }
+    return total;
+  }
+
   // ---- formatting ----
   var dateTimeFmt = new Intl.DateTimeFormat('en-GB', {
     timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
@@ -87,7 +103,7 @@
   }
   function fmtDuration(ms) {
     var s = split(ms), out = [];
-    if (s.d) out.push(s.d + (s.d === 1 ? ' day' : ' days'));
+    if (s.d) out.push(s.d + (s.d === 1 ? ' weekday' : ' weekdays'));
     if (s.h) out.push(s.h + (s.h === 1 ? ' hour' : ' hours'));
     if (s.m || !out.length) out.push(s.m + (s.m === 1 ? ' minute' : ' minutes'));
     return out.join(' ');
@@ -115,7 +131,8 @@
       return 0;
     }
     var end = full || now();
-    var s = split(end - sent);
+    var elapsed = weekdaySpan(sent, end);
+    var s = split(elapsed);
     $('d').textContent = s.d; $('h').textContent = s.h; $('m').textContent = s.m;
     if (full) {
       c.classList.add('done');
@@ -124,9 +141,9 @@
     } else {
       c.classList.remove('done');
       $('counter-label').textContent = 'Time since the complaint was sent';
-      $('counter-sub').textContent = 'Sent ' + fmtDateTime(sent);
+      $('counter-sub').textContent = (isWeekend(ukKey(now())) ? 'Paused for the weekend · ' : '') + 'Sent ' + fmtDateTime(sent);
     }
-    return end - sent;
+    return elapsed;
   }
 
   function renderMeanwhile(elapsed, sent, full) {
@@ -177,7 +194,7 @@
 
       if (at && sent) {
         var det = document.createElement('p'); det.className = 'ms-detail';
-        det.textContent = fmtDateTime(at) + ' · took ' + fmtDuration(at - sent);
+        det.textContent = fmtDateTime(at) + ' · took ' + fmtDuration(weekdaySpan(sent, at));
         li.appendChild(det);
       }
 
@@ -190,8 +207,8 @@
           var due = dl[ms.promise];
           label += ' (' + fmtDate(due) + ')';
           if (at && at <= due) { p.classList.add('met'); label += ' · met'; }
-          else if (at && at > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed by ' + fmtDuration(at - due); }
-          else if (now() > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed, overdue by ' + fmtDuration(now() - due); }
+          else if (at && at > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed by ' + fmtDuration(weekdaySpan(due, at)); }
+          else if (now() > due) { p.classList.add('missed'); li.classList.add('missed'); label += ' · missed, overdue by ' + fmtDuration(weekdaySpan(due, now())); }
         }
         p.textContent = label;
         li.appendChild(p);
