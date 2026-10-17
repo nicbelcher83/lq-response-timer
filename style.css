@@ -58,9 +58,18 @@ h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: v
 .counter.done { border-color: var(--accent); }
 
 .meanwhile { margin-top: 12px; padding: 14px 16px; }
-.meanwhile-label { margin: 0; font-size: 13px; color: var(--muted); }
-.meanwhile-text { margin: 4px 0 0; font-size: 17px; font-weight: 500; }
-.meanwhile-next { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.meanwhile-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+.meanwhile-label { margin: 0; font-weight: 600; }
+.meanwhile-count { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.meanwhile-list { list-style: none; margin: 0; padding: 0; }
+.meanwhile-list li { display: grid; grid-template-columns: 22px 52px 1fr; gap: 10px; align-items: start; padding: 9px 0; border-top: 1px solid var(--border); color: var(--muted); }
+.meanwhile-list li:first-child { border-top: 0; }
+.meanwhile-list li.done { color: var(--text); }
+.tick { width: 20px; height: 20px; margin-top: 1px; border: 2px solid var(--border); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; line-height: 1; }
+.done .tick { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.day { font-size: 13px; font-weight: 600; padding-top: 2px; white-space: nowrap; }
+.done .day { color: var(--accent); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .milestones { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .milestones li { padding: 14px 16px; }

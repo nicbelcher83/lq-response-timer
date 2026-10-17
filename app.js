@@ -134,21 +134,29 @@
     if (!sent) { box.hidden = true; return; }
     box.hidden = false;
     var days = Math.floor(elapsed / DAY_MS);
-    var current = null, next = null;
+    var list = $('meanwhile-list');
+    list.textContent = '';
+    var reached = 0;
     MEANWHILE.forEach(function (e) {
-      if (e[0] <= days) current = e;
-      else if (!next) next = e;
+      var done = e[0] <= days;
+      if (done) reached++;
+      var li = document.createElement('li');
+      if (done) li.className = 'done';
+      var tick = document.createElement('span'); tick.className = 'tick'; tick.setAttribute('aria-hidden', 'true');
+      tick.textContent = done ? '\u2713' : '';
+      var day = document.createElement('span'); day.className = 'day';
+      day.textContent = 'Day ' + e[0];
+      var txt = document.createElement('span'); txt.className = 'txt';
+      txt.textContent = e[1].charAt(0).toUpperCase() + e[1].slice(1);
+      var sr = document.createElement('span'); sr.className = 'sr';
+      sr.textContent = done ? ' (passed)' : ' (not yet)';
+      li.appendChild(tick); li.appendChild(day); li.appendChild(txt); li.appendChild(sr);
+      list.appendChild(li);
     });
-    if (current) {
-      $('meanwhile-label').textContent = 'Meanwhile, in the same amount of time (' + current[0] + (current[0] === 1 ? ' day' : ' days') + ')…';
-      $('meanwhile-text').textContent = current[1].charAt(0).toUpperCase() + current[1].slice(1);
-    } else {
-      $('meanwhile-label').textContent = 'Meanwhile, in the same amount of time…';
-      $('meanwhile-text').textContent = 'Less than a day has passed so far.';
-    }
-    $('meanwhile-next').textContent = (!full && next)
-      ? 'At ' + next[0] + ' days: ' + next[1]
-      : '';
+    $('meanwhile-label').textContent = full
+      ? 'In the time it took L&Q to respond…'
+      : 'Meanwhile, in the same amount of time…';
+    $('meanwhile-count').textContent = reached + ' of ' + MEANWHILE.length;
   }
 
   function renderMilestones(sent) {
